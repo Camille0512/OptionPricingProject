@@ -164,14 +164,13 @@ void BarrierOptionPricing<T, Container, Alloc>::start(shared_ptr<OptionInfo>& op
 
 	std::mutex m_mutex;
 	auto func = [&](int seed) {
+		unique_lock<std::mutex> lock(m_mutex);
 		for (int j = 0; j < scale; j++)
 		{
 			// Monte Carlo Simulation - with antithetic variance reduction technique
-			unique_lock<std::mutex> lock(m_mutex);
 			this->mc = make_shared<MonteCarloSimulation<T, Container, Alloc>>(this->option);
 			this->mc->genPath(rand_func, this->fdm, seed + 100 * j);
 			Container<T, Alloc> path1, path2; tie(path1, path2) = this->mc->getMesh();
-			lock.unlock();
 
 			// Set Pricer
 			this->pricer_pos = make_shared<BarrierPricer<T, Container, Alloc>>(path1, this->option, this->barrier_type, this->barrier);
@@ -179,6 +178,7 @@ void BarrierOptionPricing<T, Container, Alloc>::start(shared_ptr<OptionInfo>& op
 			this->pricer_neg = make_shared<BarrierPricer<T, Container, Alloc>>(path2, this->option, this->barrier_type, this->barrier);
 			T option_price2 = this->pricer_neg->pricing(); option_price += option_price2;
 		}
+		lock.unlock();
 	};
 
 
@@ -194,22 +194,22 @@ void BarrierOptionPricing<T, Container, Alloc>::start(shared_ptr<OptionInfo>& op
 		func(seed);
 	}*/
 
-	/* Multi-threading
+	/* Multi-threading */
 	vector<thread> vec_thread;
 	for (int i = 0; i < (this->n_sim / scale); i++)
 	{
 		vec_thread.push_back(thread(func, 1234 + 101 * i));
 	}
 	for (auto& t : vec_thread) { t.join(); }
-	*/
+	
 
-	/* OpenMP */
+	/* OpenMP 
 	omp_set_num_threads(4);
 #pragma omp parallel for
 	for (auto i = 0; i < (this->n_sim / scale); i++)
 	{
 		func(1234 + 101 * i);
-	}
+	}*/
 
 	option_price /= this->n_sim; // Average the price
 
