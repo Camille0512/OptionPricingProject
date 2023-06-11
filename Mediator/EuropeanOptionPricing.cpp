@@ -196,13 +196,18 @@ void EuropeanOptionPricing<T, Container, Alloc>::start(shared_ptr<OptionInfo>& o
 		func(seed);
 	}*/
 	
-	/* Multi-threading */
+	/* Multi-threading 
 	vector<thread> vec_thread;
 	for (int i = 0; i < (this->n_sim / scale); i++)
 	{
 		vec_thread.push_back(thread(func, 1234 + 101 * i));
 	}
-	for (auto& t : vec_thread) { t.join(); }
+	for (auto& t : vec_thread) { t.join(); }*/
+	thread t1 = thread(func, 1234);
+	thread t2 = thread(func, 12345);
+	thread t3 = thread(func, 321654);
+	thread t4 = thread(func, 311234);
+	t1.join(); t2.join(); t3.join(); t4.join();
 
 	/* OpenMP 
 	omp_set_num_threads(16);
