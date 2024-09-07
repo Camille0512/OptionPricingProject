@@ -45,9 +45,6 @@ protected:
 	double init_cond;
 	shared_ptr<OptionInfo> option;
 	shared_ptr<FDMStrategy> fdm; // 0: Euler; 1: Milstein; 2: Predictor corrector; 3: Heun
-	shared_ptr<MonteCarloSimulation<T, Container, Alloc>> mc;
-	shared_ptr<Pricer<T, Container, Alloc>> pricer_pos; // Pricer for one side using z as random number
-	shared_ptr<Pricer<T, Container, Alloc>> pricer_neg; // Pricer for the other side using -z as random number
 
 	shared_ptr<SysInfo<T, Container, Alloc>> sys_info;
 	// Observers are actually users; string: user name, int: observer type

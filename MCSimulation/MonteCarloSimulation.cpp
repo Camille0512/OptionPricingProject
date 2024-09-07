@@ -43,18 +43,14 @@ void MonteCarloSimulation<T, Container, Alloc>::genPath(function<vector<double>(
 	//std::mutex m_mutex;
 	for (int i = 0; i < steps; i++)
 	{
-		//unique_lock<std::mutex> lock(m_mutex);
 		double z = z_vec[i];
 		double new_price1 = fdm_method->compute(cur_price1, dt, z, z);
 		mesh_pos.push_back(new_price1); // Put into the mesh
 		cur_price1 = new_price1; // Update the current price
-		//lock.unlock();
 
-		//unique_lock<std::mutex> lock2(m_mutex);
 		double new_price2 = fdm_method->compute(cur_price2, dt, -z, -z);
 		mesh_neg.push_back(new_price2); // Put into the mesh
 		cur_price2 = new_price2; // Update the current price
-		//lock2.unlock();
 	}
 }
 

@@ -54,8 +54,7 @@ int main()
 		if (num == 0)
 		{
 			asset_price = 102; strike = 100; expiry = 0.5; ir = 0.03; volatility = 0.3; dividend = 0.01;
-			option_type = 1; init_cond = 0; steps = 300; //n_sims = 50000;
-			steps = 4; // Use 4 simluations to test
+			option_type = 1; init_cond = 0; steps = 300; n_sims = 50000;
 		}
 		else
 		{
@@ -77,7 +76,7 @@ int main()
 		EuropeanOptionPricing<double, vector, allocator<double>> european(n_sims, steps, init_cond);
 		cout << "*** European option pricing using GBM SDE ***" << endl;
 		european.start(call, 0, 0, 0); cout << endl;
-		/*
+		
 		cout << "*** European option pricing using CEV SDE ***" << endl;
 		double beta = 0.8; european.setBeta(beta);
 		european.start(call, 1, 0, 0); cout << endl;
@@ -98,7 +97,6 @@ int main()
 
 		cout << "*** European option pricing using GBM SDE & Heun FDM ***" << endl;
 		european.start(call, 0, 0, 3); cout << endl;
-
 
 		// Asian options
 		cout << "==================== Asian options ====================" << endl;
@@ -155,9 +153,9 @@ int main()
 		barrier.start(call, 0, 0, 2); cout << endl;
 
 		cout << "*** Barrier option pricing using GBM SDE & Heun FDM ***" << endl;
-		barrier.start(call, 0, 0, 3); cout << endl;*/
+		barrier.start(call, 0, 0, 3); cout << endl;
 	}
-	/*
+	
 	{ // Edge case
 		cout << "*** ===== *** Edge case *** ===== ***" << endl;
 		{
@@ -195,7 +193,7 @@ int main()
 			cout << "*** European option pricing using GBM SDE ***" << endl;
 			european.start(call, 0, 0, 0); cout << endl;
 		}
-	}*/
+	}
 	
 	return 0;
 }
