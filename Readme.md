@@ -5,24 +5,21 @@
 ![ContextDiagram](https://github.com/user-attachments/assets/225d1d88-8c3a-4b57-a728-d41e4271c08e)
 
 The application consists of 8 parts.
+
 The Mediator part is responsible for bringing all the rest parts of the application together.
+
 According different pricers, there are different mediators derived from the Mediator abstract class.
-The MonteCarloSimulation part is responsible for the Monte Carlo Simulation. That means to
-2
-simulate the random walk of the underlying asset price. The price path is to be used differently
-according to different option types. It composes of the IRNG part which is responsible for the
+
+The MonteCarloSimulation part is responsible for the Monte Carlo Simulation. That means to simulate the random walk of the underlying asset price. The price path is to be used differently according to different option types. It composes of the IRNG part which is responsible for the
 random number generators.
-The Pricer part takes care of the pricing formula for different kinds of options. For example, the
-Vanilla European option, the Asian option. It works based on the output from the Monte Carlo
-simulation part.
-The FDMStrategy part contains various kind of FDM strategies. It is for the approximation of the
-SDE equations. Therefore, it composes of the ISDE part.
-The OptionInfo part holds the option information. It can be derived to have equity option
-information or the interest rate product options. For this task, we only provide the equity option.
-The MIS part is in charge of the management of information system. It tells about the information
-about the pricing system. Can be a great API for the UI development to show the option
-information and the corresponding option prices. It can even be extended to show the mark and
-quote information by adding user interactive codes. But we do not extend to that far.
+
+The Pricer part takes care of the pricing formula for different kinds of options. For example, the Vanilla European option, the Asian option. It works based on the output from the Monte Carlo simulation part.
+
+The FDMStrategy part contains various kind of FDM strategies. It is for the approximation of the SDE equations. Therefore, it composes of the ISDE part.
+
+The OptionInfo part holds the option information. It can be derived to have equity option information or the interest rate product options.
+
+For this task, we only provide the equity option. The MIS part is in charge of the management of information system. It tells about the information about the pricing system. Can be a great API for the UI development to show the option information and the corresponding option prices. It can even be extended to show the mark and quote information by adding user interactive codes. But we do not extend to that far.
 
 ## UML Diagram
 
